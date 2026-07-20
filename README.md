@@ -1,165 +1,340 @@
-# Junior Data Job Scout
+# Job Scout AI
 
-A beginner-friendly Python portfolio project that collects job listings, scores them against your target role and skills, removes previously seen jobs, and creates a daily CSV and HTML report.
+An automated Python job-search assistant that finds junior data roles, scores them based on configurable criteria, compares job descriptions against a master CV, calculates ATS compatibility, and generates truthful tailored CVs.
 
-The first version uses the Remotive public API. Remotive requires applications using its data to link back to the original job listing and identify Remotive as the source.
+---
 
-## What this project demonstrates
+# Project Overview
 
-- Working with a REST API
-- JSON processing
-- Data cleaning with pandas
-- Keyword-based scoring
-- SQLite storage and duplicate prevention
-- HTML and CSV reporting
-- Optional automated email delivery
-- Task automation with Windows Task Scheduler or Linux cron
+Job Scout AI automates the repetitive parts of a job search while keeping every generated application truthful and under the user's control.
 
-## Project structure
+The application:
+
+- Fetches job listings
+- Scores jobs based on relevance
+- Filters junior opportunities
+- Calculates ATS compatibility
+- Detects matching skills
+- Generates tailored DOCX CVs
+- Tracks previously seen jobs
+- Produces CSV & HTML reports
+- Sends email notifications
+
+---
+
+# Current Features
+
+- Job fetching
+- Job relevance scoring
+- ATS keyword matching
+- Multi-word technical phrase detection
+- Duplicate keyword prevention
+- SQLite job history
+- New-job detection
+- CSV report generation
+- HTML report generation
+- Email notifications
+- Automatic tailored CV generation
+- Truthful skill filtering
+- Safe company/job-title filenames
+
+---
+
+# Architecture
 
 ```text
-junior-data-job-scout/
-├── config.yaml
-├── requirements.txt
-├── .env.example
+                   Configuration
+                         │
+                         ▼
+                  Job Search API
+                         │
+                         ▼
+                 Job Fetching Engine
+                         │
+                         ▼
+                 Job Scoring Engine
+                         │
+          ┌──────────────┴──────────────┐
+          ▼                             ▼
+     ATS Matching                 SQLite Database
+          │                             │
+          ▼                             ▼
+   CV Tailoring Engine          Seen Job Tracking
+          │
+          ▼
+    DOCX CV Generator
+          │
+          ▼
+ CSV Report • HTML Report • Email
+```
+
+---
+
+# Project Structure
+
+```text
+job-scout-ai/
+│
+├── config/
 ├── data/
+├── docs/
+├── outputs/
+│   └── tailored_cvs/
 ├── reports/
-└── src/
-    └── job_scout.py
+├── screenshots/
+├── src/
+│   ├── cv/
+│   │   ├── generator.py
+│   │   ├── keywords.py
+│   │   ├── parser.py
+│   │   ├── scorer.py
+│   │   └── tailor.py
+│   │
+│   └── job_scout.py
+│
+├── .env.example
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
 
-## Step 1 — Install Python
+---
 
-Use Python 3.11 or newer.
+# CV Tailoring Workflow
 
-Check your version:
+```text
+Master CV                      Job Description
+    │                                 │
+    ▼                                 ▼
+CV Text Extraction            Job Text Extraction
+    │                                 │
+    ▼                                 ▼
+CV Keyword Detection         Job Keyword Detection
+    │                                 │
+    └──────────────┬──────────────────┘
+                   │
+                   ▼
+          ATS Match Calculation
+                   │
+                   ▼
+         Matching Skills Selection
+                   │
+                   ▼
+          Truthful CV Tailoring
+                   │
+                   ▼
+            Tailored DOCX CV
+```
+
+The system only uses skills that already exist in the master CV.
+
+It never invents experience, technologies, or qualifications.
+
+---
+
+# Main Pipeline
+
+```text
+Load Configuration
+        │
+        ▼
+Load Master CV
+        │
+        ▼
+Extract CV Keywords
+        │
+        ▼
+Fetch Jobs
+        │
+        ▼
+Score Jobs
+        │
+        ▼
+Calculate ATS Match
+        │
+        ▼
+Filter Relevant Jobs
+        │
+        ▼
+Detect New Jobs
+        │
+        ▼
+Generate Tailored CVs
+        │
+        ▼
+Generate Reports
+        │
+        ▼
+Send Email
+```
+
+---
+
+# Installation
+
+Clone the repository
 
 ```bash
-python --version
+git clone https://github.com/natanlts-sketch/job-scout-ai.git
+cd job-scout-ai
 ```
 
-## Step 2 — Create a virtual environment
-
-### Windows PowerShell
-
-```powershell
-cd junior-data-job-scout
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
-
-### Linux
+Create virtual environment
 
 ```bash
-cd junior-data-job-scout
 python3 -m venv .venv
 source .venv/bin/activate
+```
+
+Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-## Step 3 — Run the program
-
-```bash
-python src/job_scout.py
-```
-
-Open the generated HTML file inside the `reports` folder.
-
-On the first run, matching jobs are marked as new. On later runs, SQLite remembers previously found listings and reports only newly discovered jobs.
-
-## Step 4 — Customize your search
-
-Edit `config.yaml`.
-
-Useful changes:
-
-- Add or remove job-title keywords
-- Add Israeli cities
-- Add skills from your CV
-- Raise `minimum_score` to make matching stricter
-- Change `max_age_days`
-
-## Step 5 — Enable email reports
-
-Copy `.env.example` to `.env`:
-
-### Windows
-
-```powershell
-Copy-Item .env.example .env
-```
-
-### Linux
+Create environment variables
 
 ```bash
 cp .env.example .env
 ```
 
-Set `EMAIL_ENABLED=true` and enter your email settings.
+Edit `.env` with your credentials.
 
-For Gmail, use a Google App Password rather than your normal account password.
+---
 
-## Step 6 — Schedule it every morning
-
-### Windows Task Scheduler
-
-1. Open **Task Scheduler**.
-2. Select **Create Basic Task**.
-3. Name it `Junior Data Job Scout`.
-4. Choose **Daily**.
-5. Set the desired morning time.
-6. Choose **Start a program**.
-7. Program: full path to `.venv\Scripts\python.exe`
-8. Arguments: full path to `src\job_scout.py`
-9. Start in: full path to the project folder.
-
-### Linux cron
-
-Run:
+# Running
 
 ```bash
-crontab -e
+python -m src.job_scout
 ```
 
-Example for every day at 08:00:
+---
 
-```cron
-0 8 * * * /full/path/junior-data-job-scout/.venv/bin/python /full/path/junior-data-job-scout/src/job_scout.py
+# Generated Output
+
+Tailored CVs
+
+```text
+outputs/tailored_cvs/
 ```
 
-## Suggested learning milestones
+Reports
 
-### Version 1 — Starter
-Run the included program and understand every function.
+```text
+reports/
+```
 
-### Version 2 — Better filtering
-Add separate scores for title, location, skills, and experience.
+---
 
-### Version 3 — Multiple sources
-Add another permitted API or company career-page feed. Normalize its results into the `Job` class.
+# Technologies
 
-### Version 4 — Dashboard
-Build a Streamlit dashboard showing:
-- New jobs by day
-- Companies hiring most often
-- Most requested skills
-- Average match score
-- Locations and remote availability
+- Python
+- SQLite
+- python-docx
+- REST APIs
+- HTML
+- CSV
+- Email Automation
+- Git
+- GitHub
 
-### Version 5 — CV matching
-Read skills from your CV and calculate a more advanced job-match score.
+---
 
-## GitHub portfolio checklist
+# Completed Roadmap
 
-- Add screenshots of the HTML report
-- Explain the problem and solution
-- Add an architecture diagram
-- Document the scoring rules
-- Include a sample report without personal information
-- Add tests
-- Never upload your `.env` file or passwords
+- [x] Job fetching
+- [x] Job scoring
+- [x] ATS score calculation
+- [x] CV parsing
+- [x] Keyword extraction
+- [x] Technical phrase recognition
+- [x] Duplicate keyword prevention
+- [x] SQLite database
+- [x] Seen-job tracking
+- [x] CSV reports
+- [x] HTML reports
+- [x] Email reports
+- [x] Automatic DOCX generation
+- [x] Truthful skill matching
+- [x] Git integration
+- [x] GitHub integration
 
-## Important note
+---
 
-Prefer official APIs, RSS feeds, and permitted public feeds. Do not scrape websites that prohibit automated access. Always follow the source's terms and link users to the original listing.
+# Next Milestones
+
+## Smart CV Tailoring
+
+- [ ] Rewrite professional summary
+- [ ] Reorder skills automatically
+- [ ] Prioritize relevant projects
+- [ ] Preserve one-page layout
+- [ ] Improve formatting
+
+## AI Integration
+
+- [ ] OpenAI / Claude integration
+- [ ] AI-generated summaries
+- [ ] AI-generated cover letters
+- [ ] Truthfulness validation
+
+## Application Package
+
+- [ ] PDF export
+- [ ] Cover letter generation
+- [ ] Application folder
+- [ ] Metadata tracking
+
+## Dashboard
+
+- [ ] Search Now button
+- [ ] Jobs dashboard
+- [ ] ATS dashboard
+- [ ] Download CV
+- [ ] Generate cover letter
+- [ ] Application tracking
+
+## Analytics
+
+- [ ] Interview tracking
+- [ ] Reply rate
+- [ ] ATS performance
+- [ ] Best keywords
+- [ ] Best companies
+
+---
+
+# Why This Project?
+
+Most job-search tools only scrape vacancies.
+
+Job Scout AI goes further by helping users identify relevant jobs, measuring ATS compatibility, generating truthful tailored CVs, organizing application data, and automating repetitive tasks while keeping the user in control.
+
+---
+
+# Future Vision
+
+```text
+Jobs
+   │
+   ▼
+Job Scout AI
+   │
+   ├── Score Jobs
+   ├── ATS Analysis
+   ├── Tailor CV
+   ├── Generate Cover Letter
+   ├── Export PDF
+   ├── Dashboard
+   └── Application Tracking
+```
+
+---
+
+# Author
+
+**Natan Mamedov**
+
+Junior Data Analyst | Python | SQL | Tableau | Data Automation
+
+Building practical automation tools and data-driven solutions while transitioning into Data Analytics.
