@@ -1,0 +1,49 @@
+search:
+  keywords:
+    - data analyst
+    - junior data analyst
+    - business intelligence analyst
+    - bi analyst
+    - reporting analyst
+    - operations analyst
+    - sql analyst
+
+  junior_terms:
+    - junior
+    - entry level
+    - entry-level
+    - graduate
+    - trainee
+    - internship
+    - intern
+    - starter
+    - associate
+
+  excluded_terms:
+    - senior
+    - lead
+    - principal
+    - manager
+    - director
+    - head of
+    - staff
+
+  preferred_skills:
+    - sql
+    - python
+    - tableau
+    - power bi
+    - excel
+    - pandas
+    - data visualization
+
+  locations:
+    - israel
+    - tel aviv
+    - petah tikva
+    - ramat gan
+    - herzliya
+    - remote
+
+  minimum_score: 25
+  max_age_days: 14
