@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 from src.cv.parser import CVParser
 from src.cv.keywords import extract_keywords
 from src.cv.scorer import calculate_match
-from src.cv.tailor import create_tailored_cv, find_matching_keywords
+from src.cv.generator import generate_tailored_cvs
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DB_PATH = BASE_DIR / "data" / "jobs.db"
@@ -301,13 +301,23 @@ def main() -> None:
 
     # Daily email contains only newly discovered listings.
     new_jobs = [job for job in jobs if job.is_new]
+
+    tailored_cv_paths = []
+
+    tailored_cv_paths = generate_tailored_cvs(
+        jobs=new_jobs,
+        master_cv_path=MASTER_CV_PATH,
+        output_directory=BASE_DIR / "outputs" / "tailored_cvs",
+        cv_keywords=cv_keywords,
+    )
+
     csv_path, html_path = create_reports(new_jobs)
     send_email_report(html_path, len(new_jobs))
 
     print(f"Found {len(new_jobs)} new matching jobs.")
+    print(f"Created {len(tailored_cv_paths)} tailored CVs.")
     print(f"CSV report:  {csv_path}")
     print(f"HTML report: {html_path}")
-
 
 if __name__ == "__main__":
     main()
