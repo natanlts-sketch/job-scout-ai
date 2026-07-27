@@ -62,8 +62,8 @@ def apply_brand_theme() -> None:
         }}
         [data-testid="stSidebarNav"] {{
           order: 2 !important;
-          margin-top: 0.35rem;
-          padding-top: 0.55rem;
+          margin-top: 0.25rem;
+          padding-top: 0.45rem;
           border-top: 1px solid rgba(124,255,58,0.16);
         }}
         [data-testid="stSidebarUserContent"] {{
@@ -72,7 +72,7 @@ def apply_brand_theme() -> None:
           top: 0;
           z-index: 6;
           background: linear-gradient(180deg, {CHARCOAL} 0%, #111827 100%);
-          padding-bottom: 0.35rem;
+          padding-bottom: 0.2rem;
         }}
 
         [data-testid="stSidebar"] {{
@@ -86,26 +86,41 @@ def apply_brand_theme() -> None:
           color: {GREEN_BRIGHT} !important;
         }}
 
-        /* Logo with 1px outline */
+        /* Compact logo + thin 1px outline only */
         .sidebar-brand-pin {{
-          padding: 0.35rem 0.15rem 0.55rem 0.15rem;
-          margin-bottom: 0.25rem;
+          padding: 0.2rem 0 0.35rem 0;
+          margin: 0;
         }}
         .sidebar-brand-pin [data-testid="stImage"] {{
           background: transparent !important;
+          max-width: 148px !important;
+          margin: 0 !important;
           padding: 0 !important;
         }}
-        .sidebar-brand-pin [data-testid="stImage"] img,
-        [data-testid="stSidebar"] [data-testid="stImage"] img {{
+        .sidebar-brand-pin [data-testid="stImage"] img {{
           background: transparent !important;
-          outline: 1px solid rgba(124, 255, 58, 0.7);
-          outline-offset: 6px;
-          border-radius: 4px;
+          width: 148px !important;
+          max-width: 148px !important;
+          height: auto !important;
+          border: 1px solid {GREEN} !important;
+          outline: none !important;
+          border-radius: 2px;
+          padding: 4px;
+          box-sizing: content-box;
         }}
         .brand-hero [data-testid="stImage"] img {{
-          outline: 1px solid rgba(27, 94, 32, 0.35);
-          outline-offset: 8px;
-          border-radius: 4px;
+          border: 1px solid rgba(27, 94, 32, 0.45) !important;
+          outline: none !important;
+          border-radius: 2px;
+          padding: 4px;
+          box-sizing: content-box;
+        }}
+        [data-testid="stSidebar"] .sidebar-brand-pin .stCaption,
+        [data-testid="stSidebar"] .sidebar-brand-pin [data-testid="stCaptionContainer"] {{
+          font-size: 0.68rem !important;
+          letter-spacing: 0.08em;
+          margin-top: 0.35rem !important;
+          opacity: 0.85;
         }}
 
         /* Main primary buttons */
@@ -265,7 +280,8 @@ def render_sidebar_brand(*, user_label: str | None = None) -> None:
     with st.sidebar:
         st.markdown('<div class="sidebar-brand-pin">', unsafe_allow_html=True)
         if LOGO_PATH.exists():
-            st.image(str(LOGO_PATH), use_container_width=True)
+            # Keep sidebar logo compact — not full-width.
+            st.image(str(LOGO_PATH), width=148)
         else:
             st.markdown(f"**{t('app_title')}**")
         st.caption(t("brand_tagline"))
