@@ -14,11 +14,10 @@ import pandas as pd
 import streamlit as st
 
 from auth_gate import require_user
-from i18n import language_picker, t
+from i18n import t
 from src.stats import dashboard_stats
 
 user = require_user()
-language_picker("stats_lang")
 st.title(t("statistics"))
 
 stats = dashboard_stats(user["id"])

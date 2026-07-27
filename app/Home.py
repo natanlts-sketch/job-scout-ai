@@ -16,8 +16,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-from brand import apply_brand_theme, render_brand_header, render_top_bar
-from i18n import language_picker, set_lang, sync_lang_from_prefs, t
+from brand import apply_brand_theme, render_brand_header, render_guest_controls, render_top_bar
+from i18n import get_theme, set_lang, set_theme, sync_lang_from_prefs, t
 from session_cookie import clear_session_token, read_session_token, write_session_token
 from src.auth import (
     authenticate,
@@ -37,6 +37,8 @@ initialize_database()
 
 if "ui_lang" not in st.session_state:
     set_lang("he")
+if "ui_theme" not in st.session_state:
+    set_theme("light")
 
 apply_brand_theme()
 
@@ -74,13 +76,15 @@ def end_persistent_session() -> None:
     token = read_session_token()
     revoke_session_token(token)
     clear_session_token()
+    theme = get_theme()
     st.session_state.clear()
     set_lang("he")
+    set_theme(theme)
 
 
 def login_page() -> None:
+    render_guest_controls(key_prefix="home_guest")
     render_brand_header(width=320)
-    language_picker("home_lang")
     tab_login, tab_register = st.tabs([t("login"), t("register")])
 
     with tab_login:
@@ -116,7 +120,6 @@ if not user:
     login_page()
     st.stop()
 
-language_picker("home_lang_authed")
 if render_top_bar(
     user_label=user.get("display_name") or user["email"],
     logout_key="home_top_logout",

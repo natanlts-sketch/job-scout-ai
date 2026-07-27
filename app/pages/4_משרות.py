@@ -13,7 +13,7 @@ if str(_APP) not in sys.path:
 import streamlit as st
 
 from auth_gate import require_user
-from i18n import language_picker, t
+from i18n import t
 from src.ai import (
     analyze_job,
     generate_cover_letter,
@@ -28,7 +28,6 @@ from src.cv.upload import get_active_cv, get_user_skills
 from src.matching.export import filter_frame, sort_jobs
 
 user = require_user()
-language_picker("jobs_lang")
 st.title(t("jobs"))
 
 prefs = get_preferences(user["id"])

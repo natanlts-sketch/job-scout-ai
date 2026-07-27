@@ -13,13 +13,12 @@ if str(_APP) not in sys.path:
 import streamlit as st
 
 from auth_gate import require_user
-from i18n import language_picker, t
+from i18n import t
 from src.core.config import load_config
 from src.search import last_successful_search, next_scheduled_search, run_search
 from src.sources import SOURCE_REGISTRY
 
 user = require_user()
-language_picker("search_lang")
 st.title(t("search"))
 
 config = load_config()

@@ -13,7 +13,7 @@ if str(_APP) not in sys.path:
 import streamlit as st
 
 from auth_gate import require_user
-from i18n import language_picker, set_lang, t
+from i18n import set_lang, t
 from src.ai import ai_is_enabled
 from src.auth import delete_user_and_data, get_preferences, save_preferences
 from src.notify import send_test_email
@@ -21,7 +21,6 @@ from src.security import PRIVACY_NOTICE, backup_database
 from src.sources import SOURCE_REGISTRY
 
 user = require_user()
-language_picker("settings_lang")
 st.title(t("settings"))
 
 prefs = get_preferences(user["id"])

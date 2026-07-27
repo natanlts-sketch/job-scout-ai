@@ -23,9 +23,13 @@ STRINGS: dict[str, dict[str, str]] = {
         "signed_in_as": "Signed in as",
         "log_out": "Log out",
         "hello": "Hello",
+        "home_nav": "Home",
         "home_help": "Use the left sidebar: Dashboard, CV, Search, Jobs, Applications, Settings, Statistics.",
         "go_dashboard": "Go to Dashboard",
         "ui_language": "Language / שפה",
+        "theme_dark": "Dark",
+        "theme_light": "Light",
+        "theme_toggle": "Toggle dark mode",
         "please_login": "Please log in from the Home page.",
         "go_home": "Go to Home / Login",
         "session_expired": "Session expired. Please log in again.",
@@ -168,9 +172,13 @@ STRINGS: dict[str, dict[str, str]] = {
         "signed_in_as": "מחובר/ת כ",
         "log_out": "התנתקות",
         "hello": "שלום",
+        "home_nav": "בית",
         "home_help": "השתמשו בתפריט משמאל: דשבורד, קו״ח, חיפוש, משרות, מועמדויות, הגדרות, סטטיסטיקות.",
         "go_dashboard": "מעבר לדשבורד",
         "ui_language": "שפה / Language",
+        "theme_dark": "כהה",
+        "theme_light": "בהיר",
+        "theme_toggle": "מצב כהה / בהיר",
         "please_login": "יש להתחבר מדף הבית.",
         "go_home": "חזרה לבית / התחברות",
         "session_expired": "פג תוקף ההתחברות. התחברו שוב.",
@@ -311,6 +319,18 @@ def set_lang(lang: str) -> None:
         st.session_state["ui_lang"] = lang
 
 
+def get_theme() -> str:
+    theme = st.session_state.get("ui_theme")
+    if theme in {"light", "dark"}:
+        return theme
+    return "light"
+
+
+def set_theme(theme: str) -> None:
+    if theme in {"light", "dark"}:
+        st.session_state["ui_theme"] = theme
+
+
 def t(key: str, **kwargs: Any) -> str:
     lang = get_lang()
     text = STRINGS.get(lang, STRINGS["he"]).get(key) or STRINGS["en"].get(key) or key
@@ -340,6 +360,7 @@ def apply_direction() -> None:
 
 
 def language_picker(key: str = "lang_picker") -> None:
+    """Legacy radio picker — prefer compact top-bar toggle."""
     current = get_lang()
     choice = st.radio(
         t("ui_language"),

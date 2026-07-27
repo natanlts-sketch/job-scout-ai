@@ -10,7 +10,7 @@ if str(_ROOT) not in sys.path:
 import streamlit as st
 
 from brand import apply_brand_theme, render_top_bar
-from i18n import sync_lang_from_prefs, t
+from i18n import get_theme, set_lang, set_theme, sync_lang_from_prefs, t
 from session_cookie import clear_session_token, read_session_token, write_session_token
 from src.auth import get_preferences, get_user_by_id, get_user_by_session_token, revoke_session_token
 from src.core.db import initialize_database
@@ -42,6 +42,9 @@ def require_user() -> dict:
         token = read_session_token()
         revoke_session_token(token)
         clear_session_token()
+        theme = get_theme()
         st.session_state.clear()
+        set_lang("he")
+        set_theme(theme)
         st.rerun()
     return user

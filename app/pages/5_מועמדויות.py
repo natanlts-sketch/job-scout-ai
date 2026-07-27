@@ -13,12 +13,11 @@ if str(_APP) not in sys.path:
 import streamlit as st
 
 from auth_gate import require_user
-from i18n import language_picker, t
+from i18n import t
 from src.applications import list_applications, mark_package_approved_and_applied, update_application
 from src.core.models import APPLICATION_STATUSES
 
 user = require_user()
-language_picker("apps_lang")
 st.title(t("applications"))
 
 status_filter = st.selectbox(t("status_filter"), [t("all")] + APPLICATION_STATUSES)

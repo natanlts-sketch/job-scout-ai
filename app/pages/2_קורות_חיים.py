@@ -13,7 +13,7 @@ if str(_APP) not in sys.path:
 import streamlit as st
 
 from auth_gate import require_user
-from i18n import language_picker, t
+from i18n import t
 from src.cv.upload import (
     add_user_skill,
     delete_active_cv,
@@ -24,7 +24,6 @@ from src.cv.upload import (
 )
 
 user = require_user()
-language_picker("cv_lang")
 st.title(t("cv"))
 
 cv = get_active_cv(user["id"])

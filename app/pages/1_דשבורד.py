@@ -13,12 +13,11 @@ if str(_APP) not in sys.path:
 import streamlit as st
 
 from auth_gate import require_user
-from i18n import language_picker, t
+from i18n import t
 from src.search import last_successful_search, next_scheduled_search
 from src.stats import dashboard_stats
 
 user = require_user()
-language_picker("dash_lang")
 st.title(t("dashboard"))
 
 stats = dashboard_stats(user["id"])
