@@ -50,3 +50,5 @@ data/cv/*
 
 # Streamlit
 .streamlit/secrets.toml
+data/logs/*.log
+*.zip
