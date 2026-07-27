@@ -1,3 +1,12 @@
+paths:
+  database: data/jobs.db
+  uploads: data/uploads
+  reports: reports
+  tailored_cvs: outputs/tailored_cvs
+  applications: outputs/applications
+  backups: data/backups
+  master_cv: data/cv/master_cv.docx
+
 search:
   keywords:
     - data analyst
@@ -7,6 +16,22 @@ search:
     - reporting analyst
     - operations analyst
     - sql analyst
+    - junior dba
+    - database administrator
+    - dba
+    - technical support
+    - tech support
+    - automation
+    - data automation
+    - junior automation
+    # Hebrew
+    - אנליסט נתונים
+    - אנליסט דאטה
+    - מנתח נתונים
+    - בינה עסקית
+    - מנהל מסד נתונים
+    - תמיכה טכנית
+    - אוטומציה
 
   junior_terms:
     - junior
@@ -18,6 +43,13 @@ search:
     - intern
     - starter
     - associate
+    - ג'וניור
+    - ג׳וניור
+    - זוטר
+    - מתחיל
+    - סטאז'
+    - סטאז׳
+    - סטודנט
 
   excluded_terms:
     - senior
@@ -27,6 +59,13 @@ search:
     - director
     - head of
     - staff
+    - vp
+    - chief
+    - architect
+    - סניור
+    - בכיר
+    - מנהל/ת
+    - ראש צוות
 
   preferred_skills:
     - sql
@@ -36,14 +75,106 @@ search:
     - excel
     - pandas
     - data visualization
+    - etl
+    - postgresql
+
+  high_weight_skills:
+    - sql
+    - python
+    - tableau
+    - power bi
+    - excel
 
   locations:
     - israel
     - tel aviv
+    - tel-aviv
     - petah tikva
     - ramat gan
     - herzliya
+    - haifa
+    - jerusalem
     - remote
+    - ישראל
+    - תל אביב
+    - פתח תקווה
+    - רמת גן
+    - הרצליה
+    - חיפה
+    - ירושלים
+    - מרחוק
+    - היברידי
+
+  israel_terms:
+    - israel
+    - ישראל
+    - tel aviv
+    - tel-aviv
+    - תל אביב
+    - petah tikva
+    - פתח תקווה
+    - ramat gan
+    - רמת גן
+    - herzliya
+    - הרצליה
+    - haifa
+    - חיפה
+    - jerusalem
+    - ירושלים
+    - rishon
+    - netanya
+    - beer sheva
+    - באר שבע
+
+  remote_terms:
+    - remote
+    - work from home
+    - wfh
+    - fully remote
+    - 100% remote
+    - מרחוק
+    - מהבית
+    - עבודה מהבית
+
+  hybrid_terms:
+    - hybrid
+    - היברידי
+    - חלקית מהבית
+
+  onsite_terms:
+    - on-site
+    - onsite
+    - on site
+    - office
+    - in-office
+    - במשרד
+    - פרונטלי
 
   minimum_score: 25
   max_age_days: 14
+  high_match_ats_threshold: 70
+
+sources:
+  enabled:
+    - remotive
+    - remoteok
+    - arbeitnow
+
+email:
+  high_match_notify: true
+
+ai:
+  enabled_default: false
+  model: claude-sonnet-4-20250514
+  max_tokens_per_call: 2048
+  daily_token_budget: 100000
+
+security:
+  max_upload_mb: 5
+  allowed_cv_extensions:
+    - .docx
+    - .pdf
+  session_days: 14
+
+scheduler:
+  default_frequency_hours: 24

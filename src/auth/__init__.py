@@ -1,0 +1,170 @@
+from __future__ import annotations
+
+import json
+import secrets
+from datetime import datetime, timezone
+from typing import Any
+
+import bcrypt
+
+from src.core.db import initialize_database
+from src.core.logging_setup import get_logger
+
+logger = get_logger("jobscout.auth")
+
+
+def utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def verify_password(password: str, password_hash: str) -> bool:
+    try:
+        return bcrypt.checkpw(password.encode("utf-8"), password_hash.encode("utf-8"))
+    except ValueError:
+        return False
+
+
+def create_user(email: str, password: str, display_name: str = "") -> dict[str, Any]:
+    email = email.strip().lower()
+    if not email or not password or len(password) < 8:
+        raise ValueError("Valid email and password (min 8 chars) required")
+
+    now = utc_now()
+    with initialize_database() as conn:
+        existing = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
+        if existing:
+            raise ValueError("Email already registered")
+        cur = conn.execute(
+            """
+            INSERT INTO users (email, password_hash, display_name, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (email, hash_password(password), display_name or email.split("@")[0], now, now),
+        )
+        user_id = cur.lastrowid
+        conn.execute(
+            """
+            INSERT INTO user_preferences (user_id, updated_at)
+            VALUES (?, ?)
+            """,
+            (user_id, now),
+        )
+        conn.commit()
+        logger.info("Created user %s", email)
+        return get_user_by_id(user_id)
+
+
+def authenticate(email: str, password: str) -> dict[str, Any] | None:
+    email = email.strip().lower()
+    with initialize_database() as conn:
+        row = conn.execute(
+            "SELECT * FROM users WHERE email = ? AND is_active = 1",
+            (email,),
+        ).fetchone()
+    if not row:
+        return None
+    if not verify_password(password, row["password_hash"]):
+        return None
+    return dict(row)
+
+
+def get_user_by_id(user_id: int) -> dict[str, Any] | None:
+    with initialize_database() as conn:
+        row = conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+    return dict(row) if row else None
+
+
+def delete_user_and_data(user_id: int) -> None:
+    with initialize_database() as conn:
+        conn.execute("DELETE FROM users WHERE id = ?", (user_id,))
+        conn.commit()
+    logger.info("Deleted user %s and cascaded data", user_id)
+
+
+def get_preferences(user_id: int) -> dict[str, Any]:
+    with initialize_database() as conn:
+        row = conn.execute(
+            "SELECT * FROM user_preferences WHERE user_id = ?",
+            (user_id,),
+        ).fetchone()
+    if not row:
+        return {}
+    data = dict(row)
+    for key in (
+        "preferred_titles",
+        "preferred_locations",
+        "preferred_languages",
+        "excluded_companies",
+        "excluded_keywords",
+        "preferred_sources",
+    ):
+        try:
+            data[key] = json.loads(data.get(key) or "[]")
+        except json.JSONDecodeError:
+            data[key] = []
+    return data
+
+
+def save_preferences(user_id: int, prefs: dict[str, Any]) -> None:
+    now = utc_now()
+
+    def dumps(value: Any) -> str:
+        if isinstance(value, str):
+            return value
+        return json.dumps(value or [])
+
+    with initialize_database() as conn:
+        conn.execute(
+            """
+            INSERT INTO user_preferences (
+                user_id, preferred_titles, preferred_locations, remote_preference,
+                minimum_ats_score, experience_level, preferred_languages,
+                excluded_companies, excluded_keywords, preferred_sources,
+                salary_preference, email_notifications, ai_consent,
+                search_frequency_hours, language, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(user_id) DO UPDATE SET
+                preferred_titles=excluded.preferred_titles,
+                preferred_locations=excluded.preferred_locations,
+                remote_preference=excluded.remote_preference,
+                minimum_ats_score=excluded.minimum_ats_score,
+                experience_level=excluded.experience_level,
+                preferred_languages=excluded.preferred_languages,
+                excluded_companies=excluded.excluded_companies,
+                excluded_keywords=excluded.excluded_keywords,
+                preferred_sources=excluded.preferred_sources,
+                salary_preference=excluded.salary_preference,
+                email_notifications=excluded.email_notifications,
+                ai_consent=excluded.ai_consent,
+                search_frequency_hours=excluded.search_frequency_hours,
+                language=excluded.language,
+                updated_at=excluded.updated_at
+            """,
+            (
+                user_id,
+                dumps(prefs.get("preferred_titles", [])),
+                dumps(prefs.get("preferred_locations", [])),
+                prefs.get("remote_preference", "any"),
+                float(prefs.get("minimum_ats_score") or 0),
+                prefs.get("experience_level", "junior"),
+                dumps(prefs.get("preferred_languages", ["en", "he"])),
+                dumps(prefs.get("excluded_companies", [])),
+                dumps(prefs.get("excluded_keywords", [])),
+                dumps(prefs.get("preferred_sources", [])),
+                prefs.get("salary_preference"),
+                1 if prefs.get("email_notifications", True) else 0,
+                1 if prefs.get("ai_consent", False) else 0,
+                int(prefs.get("search_frequency_hours") or 24),
+                prefs.get("language", "en"),
+                now,
+            ),
+        )
+        conn.commit()
+
+
+def new_session_token() -> str:
+    return secrets.token_urlsafe(32)

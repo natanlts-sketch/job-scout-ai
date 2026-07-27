@@ -13,27 +13,40 @@ env/
 # Environment variables
 .env
 
-# VS Code
+# VS Code / JetBrains
 .vscode/
-
-# JetBrains
 .idea/
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Python caches
+# Caches
 .pytest_cache/
 .mypy_cache/
 
-# Reports (optional)
+# Reports
 reports/*.html
 reports/*.csv
+reports/*.xlsx
 
-# Generated tailored CVs
+# Generated outputs
 outputs/tailored_cvs/
 outputs/applications/
 
-# SQLite database
+# Database and uploads
 data/jobs.db
+data/jobs.db-*
+data/uploads/
+data/backups/
+*.db
+
+# Personal CVs (keep local only)
+*.docx
+*.pdf
+!docs/**
+data/cv/*
+!data/cv/.gitkeep
+
+# Streamlit
+.streamlit/secrets.toml
