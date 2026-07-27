@@ -18,6 +18,9 @@ CHARCOAL = "#1A1A1A"
 SOFT_GRAY = "#F4F6F5"
 MUTED = "#5C6670"
 
+# Default Streamlit sidebar ~21rem → 30% thinner ≈ 14.7rem
+SIDEBAR_WIDTH = "14.7rem"
+
 
 def apply_brand_theme() -> None:
     rtl = get_lang() == "he"
@@ -41,7 +44,7 @@ def apply_brand_theme() -> None:
         }}
 
         .block-container {{
-          padding-top: 1.4rem;
+          padding-top: 0.85rem;
           max-width: 1100px;
         }}
 
@@ -55,29 +58,18 @@ def apply_brand_theme() -> None:
           color: {CHARCOAL};
         }}
 
-        /* Sidebar layout: pin brand block ABOVE page menu */
-        section[data-testid="stSidebar"] > div:first-child {{
-          display: flex;
-          flex-direction: column;
-        }}
-        [data-testid="stSidebarNav"] {{
-          order: 2 !important;
-          margin-top: 0.25rem;
-          padding-top: 0.45rem;
-          border-top: 1px solid rgba(124,255,58,0.16);
-        }}
-        [data-testid="stSidebarUserContent"] {{
-          order: 1 !important;
-          position: sticky;
-          top: 0;
-          z-index: 6;
-          background: linear-gradient(180deg, {CHARCOAL} 0%, #111827 100%);
-          padding-bottom: 0.2rem;
-        }}
-
-        [data-testid="stSidebar"] {{
+        /* Sidebar 30% thinner — navigation only */
+        section[data-testid="stSidebar"] {{
           background: linear-gradient(180deg, {CHARCOAL} 0%, #111827 55%, #0b1220 100%);
           border-right: 1px solid rgba(124,255,58,0.18);
+          width: {SIDEBAR_WIDTH} !important;
+          min-width: {SIDEBAR_WIDTH} !important;
+          max-width: {SIDEBAR_WIDTH} !important;
+        }}
+        section[data-testid="stSidebar"] > div {{
+          width: {SIDEBAR_WIDTH} !important;
+          min-width: {SIDEBAR_WIDTH} !important;
+          max-width: {SIDEBAR_WIDTH} !important;
         }}
         [data-testid="stSidebar"] * {{
           color: #F3F4F6 !important;
@@ -85,42 +77,48 @@ def apply_brand_theme() -> None:
         [data-testid="stSidebar"] a:hover {{
           color: {GREEN_BRIGHT} !important;
         }}
+        [data-testid="stSidebarUserContent"] {{
+          display: none !important;
+        }}
 
-        /* Compact logo + thin 1px outline only */
-        .sidebar-brand-pin {{
-          padding: 0.2rem 0 0.35rem 0;
-          margin: 0;
+        /* Top menu bar: logo + signed-in + logout */
+        .top-menu-bar {{
+          background: rgba(255,255,255,0.72);
+          border: 1px solid rgba(27,94,32,0.12);
+          border-radius: 14px;
+          padding: 0.45rem 0.85rem;
+          margin-bottom: 0.85rem;
         }}
-        .sidebar-brand-pin [data-testid="stImage"] {{
+        .top-menu-bar [data-testid="stImage"],
+        .top-menu-bar [data-testid="stImage"] img {{
           background: transparent !important;
-          max-width: 148px !important;
-          margin: 0 !important;
-          padding: 0 !important;
         }}
-        .sidebar-brand-pin [data-testid="stImage"] img {{
-          background: transparent !important;
-          width: 148px !important;
-          max-width: 148px !important;
-          height: auto !important;
+        .top-menu-bar [data-testid="stImage"] img {{
           border: 1px solid {GREEN} !important;
-          outline: none !important;
           border-radius: 2px;
-          padding: 4px;
+          padding: 3px;
           box-sizing: content-box;
         }}
-        .brand-hero [data-testid="stImage"] img {{
-          border: 1px solid rgba(27, 94, 32, 0.45) !important;
-          outline: none !important;
-          border-radius: 2px;
-          padding: 4px;
-          box-sizing: content-box;
+        .top-user-line {{
+          margin: 0;
+          font-size: 0.92rem;
+          color: {CHARCOAL};
+          font-weight: 600;
         }}
-        [data-testid="stSidebar"] .sidebar-brand-pin .stCaption,
-        [data-testid="stSidebar"] .sidebar-brand-pin [data-testid="stCaptionContainer"] {{
-          font-size: 0.68rem !important;
-          letter-spacing: 0.08em;
-          margin-top: 0.35rem !important;
-          opacity: 0.85;
+        .top-menu-bar .logout-wrap div.stButton > button {{
+          background: transparent !important;
+          border: 1px solid rgba(26,26,26,0.18) !important;
+          color: {CHARCOAL} !important;
+          font-weight: 600 !important;
+          border-radius: 999px !important;
+          padding: 0.4rem 0.95rem !important;
+          box-shadow: none !important;
+          width: 100%;
+        }}
+        .top-menu-bar .logout-wrap div.stButton > button:hover {{
+          background: rgba(239, 68, 68, 0.10) !important;
+          border-color: rgba(220, 38, 38, 0.45) !important;
+          color: #B91C1C !important;
         }}
 
         /* Main primary buttons */
@@ -141,32 +139,6 @@ def apply_brand_theme() -> None:
           border: 1px solid rgba(57,181,74,0.35);
           color: {CHARCOAL};
           font-weight: 600;
-        }}
-
-        /* Logout / disconnect — quiet sidebar action */
-        [data-testid="stSidebar"] .logout-wrap div.stButton > button,
-        [data-testid="stSidebar"] div.stButton > button {{
-          width: 100%;
-          background: transparent !important;
-          border: 1px solid rgba(243,244,246,0.22) !important;
-          color: #E5E7EB !important;
-          font-weight: 600 !important;
-          border-radius: 999px !important;
-          padding: 0.45rem 0.9rem !important;
-          box-shadow: none !important;
-        }}
-        [data-testid="stSidebar"] .logout-wrap div.stButton > button:hover,
-        [data-testid="stSidebar"] div.stButton > button:hover {{
-          background: rgba(239, 68, 68, 0.14) !important;
-          border-color: rgba(252, 165, 165, 0.55) !important;
-          color: #FECACA !important;
-        }}
-
-        .sidebar-user-line {{
-          font-size: 0.82rem;
-          color: #D1D5DB !important;
-          margin: 0.35rem 0 0.55rem 0;
-          opacity: 0.92;
         }}
 
         [data-testid="stMetric"] {{
@@ -205,6 +177,16 @@ def apply_brand_theme() -> None:
           direction: {direction};
           text-align: {text_align};
         }}
+        .brand-hero [data-testid="stImage"],
+        .brand-hero [data-testid="stImage"] img {{
+          background: transparent !important;
+        }}
+        .brand-hero [data-testid="stImage"] img {{
+          border: 1px solid {GREEN} !important;
+          border-radius: 2px;
+          padding: 3px;
+          box-sizing: content-box;
+        }}
         .brand-tagline {{
           margin: 0;
           font-size: 0.78rem;
@@ -218,12 +200,6 @@ def apply_brand_theme() -> None:
           color: {MUTED};
           font-size: 0.95rem;
         }}
-        .brand-card {{
-          background: #ffffff;
-          border: 1px solid rgba(27,94,32,0.12);
-          border-radius: 18px;
-          padding: 1.25rem 1.35rem 1.4rem;
-        }}
         .brand-divider {{
           height: 3px;
           width: 84px;
@@ -232,14 +208,11 @@ def apply_brand_theme() -> None:
           margin: 0.55rem 0 0.9rem 0;
         }}
 
-        /* Hide Streamlit "Press Enter to apply" helper under inputs */
         [data-testid="InputInstructions"] {{
           display: none !important;
         }}
 
-        [data-testid="stImage"] img {{
-          background: transparent !important;
-        }}
+        [data-testid="stImage"] img,
         [data-testid="stImage"] {{
           background: transparent !important;
         }}
@@ -260,6 +233,7 @@ def render_logo(width: int = 320) -> None:
 
 
 def render_brand_header(*, show_caption: bool = True, width: int = 340) -> None:
+    """Login-page brand block only (not the app top bar)."""
     apply_brand_theme()
     st.markdown('<div class="brand-hero">', unsafe_allow_html=True)
     render_logo(width=width)
@@ -275,28 +249,24 @@ def render_brand_header(*, show_caption: bool = True, width: int = 340) -> None:
     st.markdown('<div class="brand-divider"></div></div>', unsafe_allow_html=True)
 
 
-def render_sidebar_brand(*, user_label: str | None = None) -> None:
-    """Pinned brand block that CSS places above the page menu."""
-    with st.sidebar:
-        st.markdown('<div class="sidebar-brand-pin">', unsafe_allow_html=True)
+def render_top_bar(*, user_label: str, logout_key: str = "top_logout") -> bool:
+    """Top menu bar: transparent logo + signed-in label + logout."""
+    apply_brand_theme()
+    st.markdown('<div class="top-menu-bar">', unsafe_allow_html=True)
+    left, mid, right = st.columns([2.0, 4.2, 1.5], vertical_alignment="center")
+    with left:
         if LOGO_PATH.exists():
-            # Keep sidebar logo compact — not full-width.
-            st.image(str(LOGO_PATH), width=148)
+            st.image(str(LOGO_PATH), width=168)
         else:
             st.markdown(f"**{t('app_title')}**")
-        st.caption(t("brand_tagline"))
-        if user_label:
-            st.markdown(
-                f'<p class="sidebar-user-line">{t("signed_in_as")} <strong>{user_label}</strong></p>',
-                unsafe_allow_html=True,
-            )
-        st.markdown("</div>", unsafe_allow_html=True)
-
-
-def render_sidebar_logout(key: str = "sidebar_logout") -> bool:
-    """Styled disconnect control. Returns True when clicked."""
-    with st.sidebar:
+    with mid:
+        st.markdown(
+            f'<p class="top-user-line">{t("signed_in_as")} <strong>{user_label}</strong></p>',
+            unsafe_allow_html=True,
+        )
+    with right:
         st.markdown('<div class="logout-wrap">', unsafe_allow_html=True)
-        clicked = st.button(t("log_out"), key=key, use_container_width=True)
+        clicked = st.button(t("log_out"), key=logout_key, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
-        return clicked
+    st.markdown("</div>", unsafe_allow_html=True)
+    return clicked

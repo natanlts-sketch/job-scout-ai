@@ -16,12 +16,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-from brand import (
-    apply_brand_theme,
-    render_brand_header,
-    render_sidebar_brand,
-    render_sidebar_logout,
-)
+from brand import apply_brand_theme, render_brand_header, render_top_bar
 from i18n import language_picker, set_lang, sync_lang_from_prefs, t
 from session_cookie import clear_session_token, read_session_token, write_session_token
 from src.auth import (
@@ -84,7 +79,7 @@ def end_persistent_session() -> None:
 
 
 def login_page() -> None:
-    render_brand_header(width=380)
+    render_brand_header(width=320)
     language_picker("home_lang")
     tab_login, tab_register = st.tabs([t("login"), t("register")])
 
@@ -121,13 +116,14 @@ if not user:
     login_page()
     st.stop()
 
-render_sidebar_brand(user_label=user.get("display_name") or user["email"])
 language_picker("home_lang_authed")
-if render_sidebar_logout(key="home_logout"):
+if render_top_bar(
+    user_label=user.get("display_name") or user["email"],
+    logout_key="home_top_logout",
+):
     end_persistent_session()
     st.rerun()
 
-render_brand_header(show_caption=False, width=300)
 st.title(f"{t('hello')}, {user.get('display_name') or 'there'}")
 st.write(t("home_help"))
 st.page_link("pages/1_דשבורד.py", label=t("go_dashboard"))
