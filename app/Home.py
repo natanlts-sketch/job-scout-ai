@@ -18,12 +18,7 @@ st.set_page_config(
 
 from brand import apply_brand_theme, render_brand_header, render_sidebar_brand
 from i18n import language_picker, set_lang, sync_lang_from_prefs, t
-from session_cookie import (
-    clear_session_cookie,
-    init_cookie_manager,
-    read_session_cookie,
-    write_session_cookie,
-)
+from session_cookie import clear_session_token, read_session_token, write_session_token
 from src.auth import (
     authenticate,
     create_login_session,
@@ -39,7 +34,6 @@ from src.core.logging_setup import setup_logging
 
 setup_logging()
 initialize_database()
-init_cookie_manager()
 
 if "ui_lang" not in st.session_state:
     set_lang("he")
@@ -52,18 +46,18 @@ def _session_days() -> int:
     return max(1, configured)
 
 
-def restore_session_from_cookie() -> dict | None:
+def restore_session() -> dict | None:
     if st.session_state.get("user_id"):
         user = get_user_by_id(st.session_state["user_id"])
         if user:
             return user
         st.session_state.pop("user_id", None)
 
-    token = read_session_cookie()
+    token = read_session_token()
     user = get_user_by_session_token(token)
     if user:
         st.session_state["user_id"] = user["id"]
-        st.session_state["session_token"] = token
+        write_session_token(token or "")
         sync_lang_from_prefs(get_preferences(user["id"]))
         return user
     return None
@@ -73,20 +67,18 @@ def start_persistent_session(user_id: int) -> None:
     days = _session_days()
     token = create_login_session(user_id, days=days)
     st.session_state["user_id"] = user_id
-    st.session_state["session_token"] = token
-    write_session_cookie(token, days=days)
+    write_session_token(token)
 
 
 def end_persistent_session() -> None:
-    token = st.session_state.get("session_token") or read_session_cookie()
+    token = read_session_token()
     revoke_session_token(token)
-    clear_session_cookie()
+    clear_session_token()
     st.session_state.clear()
     set_lang("he")
 
 
 def login_page() -> None:
-    # Logo + tagline above the form (branding, not an extra settings window)
     render_brand_header(width=380)
     language_picker("home_lang")
     tab_login, tab_register = st.tabs([t("login"), t("register")])
@@ -119,7 +111,7 @@ def login_page() -> None:
                 st.error(str(exc))
 
 
-user = restore_session_from_cookie()
+user = restore_session()
 if not user:
     login_page()
     st.stop()
