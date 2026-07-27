@@ -12,13 +12,14 @@ import streamlit as st
 
 from brand import apply_brand_theme, render_sidebar_brand
 from i18n import sync_lang_from_prefs, t
-from session_cookie import clear_session_cookie, read_session_cookie
+from session_cookie import clear_session_cookie, init_cookie_manager, read_session_cookie
 from src.auth import get_preferences, get_user_by_id, get_user_by_session_token, revoke_session_token
 from src.core.db import initialize_database
 
 
 def require_user() -> dict:
     initialize_database()
+    init_cookie_manager()
     apply_brand_theme()
     render_sidebar_brand()
 

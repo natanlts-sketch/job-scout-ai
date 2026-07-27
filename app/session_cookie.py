@@ -6,29 +6,34 @@ from datetime import datetime, timedelta, timezone
 import streamlit as st
 
 COOKIE_KEY = "jobscout_session"
+_MANAGER = None
 
 
-def _cookie_manager():
-    import extra_streamlit_components as stx
+def init_cookie_manager():
+    """Create CookieManager once per script run (Streamlit keys must be unique)."""
+    global _MANAGER
+    if _MANAGER is None:
+        import extra_streamlit_components as stx
 
-    # Unique key so the component mounts once per app session.
-    return stx.CookieManager(key="jobscout_cookie_manager")
+        _MANAGER = stx.CookieManager(key="jobscout_cookie_manager")
+    return _MANAGER
 
 
 def read_session_cookie() -> str | None:
-    manager = _cookie_manager()
+    manager = init_cookie_manager()
     value = manager.get(COOKIE_KEY)
-    # First render often returns None before the component hydrates.
-    if value is None and not st.session_state.get("_cookies_ready"):
-        st.session_state["_cookies_ready"] = True
-        st.rerun()
+    # Allow one hydration pass for the cookie component.
+    if not st.session_state.get("_cookies_hydrated"):
+        st.session_state["_cookies_hydrated"] = True
+        if value is None:
+            st.rerun()
     if not value or value in {"", "null", "None"}:
         return None
     return str(value)
 
 
 def write_session_cookie(token: str, days: int = 1) -> None:
-    manager = _cookie_manager()
+    manager = init_cookie_manager()
     expires = datetime.now(timezone.utc) + timedelta(days=max(1, days))
     manager.set(
         COOKIE_KEY,
@@ -38,5 +43,5 @@ def write_session_cookie(token: str, days: int = 1) -> None:
 
 
 def clear_session_cookie() -> None:
-    manager = _cookie_manager()
+    manager = init_cookie_manager()
     manager.delete(COOKIE_KEY)

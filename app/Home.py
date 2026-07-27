@@ -18,7 +18,12 @@ st.set_page_config(
 
 from brand import apply_brand_theme, render_brand_header, render_sidebar_brand
 from i18n import language_picker, set_lang, sync_lang_from_prefs, t
-from session_cookie import clear_session_cookie, read_session_cookie, write_session_cookie
+from session_cookie import (
+    clear_session_cookie,
+    init_cookie_manager,
+    read_session_cookie,
+    write_session_cookie,
+)
 from src.auth import (
     authenticate,
     create_login_session,
@@ -34,6 +39,7 @@ from src.core.logging_setup import setup_logging
 
 setup_logging()
 initialize_database()
+init_cookie_manager()
 
 if "ui_lang" not in st.session_state:
     set_lang("he")
