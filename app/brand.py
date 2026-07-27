@@ -148,6 +148,19 @@ def apply_brand_theme() -> None:
           margin: 0.55rem 0 0.9rem 0;
         }}
 
+        /* Hide Streamlit "Press Enter to apply" helper under inputs */
+        [data-testid="InputInstructions"] {{
+          display: none !important;
+        }}
+
+        /* Transparent logo presentation (no white plate) */
+        [data-testid="stImage"] img {{
+          background: transparent !important;
+        }}
+        [data-testid="stImage"] {{
+          background: transparent !important;
+        }}
+
         /* Force readable content direction for HE */
         .block-container, [data-testid="stMarkdownContainer"], label, p, h1, h2, h3 {{
           direction: {direction};
