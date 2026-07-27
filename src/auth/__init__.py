@@ -180,7 +180,7 @@ def save_preferences(user_id: int, prefs: dict[str, Any]) -> None:
                 1 if prefs.get("email_notifications", True) else 0,
                 1 if prefs.get("ai_consent", False) else 0,
                 int(prefs.get("search_frequency_hours") or 24),
-                prefs.get("language", "en"),
+                prefs.get("language", "he"),
                 now,
             ),
         )
