@@ -5,9 +5,9 @@ from pathlib import Path
 
 import streamlit as st
 
-from i18n import get_lang, get_theme, set_lang, set_theme, t
+from src.streamlit_ui.i18n import get_lang, get_theme, set_lang, set_theme, t
 
-ASSETS = Path(__file__).resolve().parent / "assets"
+ASSETS = Path(__file__).resolve().parents[2] / "app" / "assets"
 LOGO_PATH = ASSETS / "logo.png"
 
 GREEN = "#39B54A"

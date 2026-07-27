@@ -12,8 +12,8 @@ if str(_APP) not in sys.path:
 
 import streamlit as st
 
-from auth_gate import require_user
-from i18n import set_lang, t
+from src.streamlit_ui.auth_gate import require_user
+from src.streamlit_ui.i18n import set_lang, t
 from src.ai import ai_is_enabled
 from src.auth import delete_user_and_data, get_preferences, save_preferences
 from src.notify import send_test_email

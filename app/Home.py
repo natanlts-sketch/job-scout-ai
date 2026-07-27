@@ -16,9 +16,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-from brand import apply_brand_theme, render_brand_header, render_guest_controls, render_top_bar
-from i18n import get_theme, set_lang, set_theme, sync_lang_from_prefs, t
-from session_cookie import clear_session_token, read_session_token, write_session_token
+from src.streamlit_ui.brand import (
+    apply_brand_theme,
+    render_brand_header,
+    render_guest_controls,
+    render_top_bar,
+)
+from src.streamlit_ui.i18n import get_theme, set_lang, set_theme, sync_lang_from_prefs, t
+from src.streamlit_ui.session_cookie import (
+    clear_session_token,
+    read_session_token,
+    write_session_token,
+)
 from src.auth import (
     authenticate,
     create_login_session,

@@ -12,8 +12,8 @@ if str(_APP) not in sys.path:
 
 import streamlit as st
 
-from auth_gate import require_user
-from i18n import t
+from src.streamlit_ui.auth_gate import require_user
+from src.streamlit_ui.i18n import t
 from src.search import last_successful_search, next_scheduled_search
 from src.stats import dashboard_stats
 
