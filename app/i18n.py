@@ -9,6 +9,7 @@ STRINGS: dict[str, dict[str, str]] = {
     "en": {
         "app_title": "Job Scout AI",
         "app_caption": "Multi-user job matching · Hebrew & English · truthful CV tooling",
+        "brand_tagline": "Find. Match. Land your dream job.",
         "login": "Log in",
         "register": "Register",
         "email": "Email",
@@ -153,6 +154,7 @@ STRINGS: dict[str, dict[str, str]] = {
     "he": {
         "app_title": "Job Scout AI",
         "app_caption": "חיפוש משרות חכם · עברית ואנגלית · התאמת קו״ח אמיתית",
+        "brand_tagline": "מצא. התאם. נחת על המשרה שלך.",
         "login": "התחברות",
         "register": "הרשמה",
         "email": "אימייל",

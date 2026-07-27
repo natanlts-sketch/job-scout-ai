@@ -11,12 +11,13 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Job Scout AI",
-    page_icon="🔎",
+    page_icon=str(Path(__file__).resolve().parent / "assets" / "logo.png"),
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-from i18n import apply_direction, language_picker, set_lang, sync_lang_from_prefs, t
+from brand import apply_brand_theme, render_brand_header, render_sidebar_brand
+from i18n import language_picker, set_lang, sync_lang_from_prefs, t
 from src.auth import authenticate, create_user, get_preferences, get_user_by_id
 from src.core.db import initialize_database
 from src.core.logging_setup import setup_logging
@@ -27,19 +28,7 @@ initialize_database()
 if "ui_lang" not in st.session_state:
     set_lang("he")
 
-apply_direction()
-
-st.markdown(
-    """
-    <style>
-    .block-container {padding-top: 1.2rem; max-width: 1100px;}
-    [data-testid="stSidebar"] {background: linear-gradient(180deg,#0f172a,#1e293b); color:#e2e8f0;}
-    [data-testid="stSidebar"] * {color:#e2e8f0 !important;}
-    h1,h2,h3 {letter-spacing:-0.02em;}
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+apply_brand_theme()
 
 
 def ensure_auth() -> dict | None:
@@ -52,9 +41,9 @@ def ensure_auth() -> dict | None:
 
 
 def login_page() -> None:
+    render_brand_header(width=380)
     language_picker("home_lang")
-    st.title(t("app_title"))
-    st.caption(t("app_caption"))
+    st.markdown('<div class="brand-card">', unsafe_allow_html=True)
     tab_login, tab_register = st.tabs([t("login"), t("register")])
 
     with tab_login:
@@ -74,7 +63,7 @@ def login_page() -> None:
         email = st.text_input(t("email"), key="reg_email")
         name = st.text_input(t("display_name"), key="reg_name")
         password = st.text_input(t("password_min"), type="password", key="reg_password")
-        if st.button(t("create_account")):
+        if st.button(t("create_account"), type="primary"):
             try:
                 user = create_user(email, password, name)
                 st.session_state["user_id"] = user["id"]
@@ -83,6 +72,7 @@ def login_page() -> None:
                 st.rerun()
             except ValueError as exc:
                 st.error(str(exc))
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
 user = ensure_auth()
@@ -90,14 +80,15 @@ if not user:
     login_page()
     st.stop()
 
+render_sidebar_brand()
 language_picker("home_lang_authed")
-st.sidebar.title(t("app_title"))
 st.sidebar.write(f"{t('signed_in_as')} **{user.get('display_name') or user['email']}**")
 if st.sidebar.button(t("log_out")):
     st.session_state.clear()
     set_lang("he")
     st.rerun()
 
+render_brand_header(show_caption=False, width=300)
 st.title(f"{t('hello')}, {user.get('display_name') or 'there'}")
 st.write(t("home_help"))
-st.page_link("pages/1_דשבורד.py", label=t("go_dashboard"), icon="📊")
+st.page_link("pages/1_דשבורד.py", label=t("go_dashboard"))
