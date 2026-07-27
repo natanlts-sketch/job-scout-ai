@@ -12,7 +12,7 @@ from src.core.models import Job
 from src.cv.keywords import extract_keywords
 from src.cv.parser import CVParser
 from src.cv.upload import get_active_cv, get_user_skills
-from src.matching import add_ats_and_explanation, filter_jobs, score_job
+from src.matching.scorer import add_ats_and_explanation, filter_jobs, score_job
 from src.matching.export import export_reports
 from src.notify import send_daily_report, send_high_match_alerts
 from src.sources import fetch_all_jobs
