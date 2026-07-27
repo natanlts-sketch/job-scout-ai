@@ -68,15 +68,15 @@ def apply_brand_theme() -> None:
 
         div.stButton > button[kind="primary"],
         div.stButton > button[data-testid="baseButton-primary"] {{
-          background: linear-gradient(90deg, {GREEN_DARK}, {GREEN}, {GREEN_BRIGHT});
-          color: {CHARCOAL};
+          background: {GREEN};
+          color: #ffffff;
           border: 0;
           font-weight: 700;
           border-radius: 10px;
         }}
         div.stButton > button[kind="primary"]:hover {{
-          filter: brightness(1.05);
-          color: {CHARCOAL};
+          background: {GREEN_DARK};
+          color: #ffffff;
         }}
         div.stButton > button {{
           border-radius: 10px;

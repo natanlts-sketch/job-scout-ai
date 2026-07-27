@@ -189,3 +189,62 @@ def save_preferences(user_id: int, prefs: dict[str, Any]) -> None:
 
 def new_session_token() -> str:
     return secrets.token_urlsafe(32)
+
+
+def create_login_session(user_id: int, days: int | None = None) -> str:
+    """Create a durable login session token (default from config, min 1 day)."""
+    from datetime import timedelta
+
+    from src.core.config import load_config
+
+    config = load_config()
+    configured = int((config.get("security") or {}).get("session_days", 1))
+    days = max(1, int(days if days is not None else configured))
+    now = datetime.now(timezone.utc)
+    expires = now + timedelta(days=days)
+    token = new_session_token()
+    with initialize_database() as conn:
+        conn.execute(
+            """
+            INSERT INTO user_sessions (token, user_id, expires_at, created_at)
+            VALUES (?, ?, ?, ?)
+            """,
+            (token, user_id, expires.isoformat(), now.isoformat()),
+        )
+        conn.commit()
+    return token
+
+
+def get_user_by_session_token(token: str | None) -> dict[str, Any] | None:
+    if not token:
+        return None
+    now = datetime.now(timezone.utc).isoformat()
+    with initialize_database() as conn:
+        row = conn.execute(
+            """
+            SELECT u.*
+            FROM user_sessions s
+            JOIN users u ON u.id = s.user_id
+            WHERE s.token = ? AND s.expires_at >= ? AND u.is_active = 1
+            """,
+            (token, now),
+        ).fetchone()
+        if not row:
+            conn.execute("DELETE FROM user_sessions WHERE token = ?", (token,))
+            conn.commit()
+            return None
+        return dict(row)
+
+
+def revoke_session_token(token: str | None) -> None:
+    if not token:
+        return
+    with initialize_database() as conn:
+        conn.execute("DELETE FROM user_sessions WHERE token = ?", (token,))
+        conn.commit()
+
+
+def revoke_user_sessions(user_id: int) -> None:
+    with initialize_database() as conn:
+        conn.execute("DELETE FROM user_sessions WHERE user_id = ?", (user_id,))
+        conn.commit()

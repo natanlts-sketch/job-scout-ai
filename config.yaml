@@ -174,7 +174,7 @@ security:
   allowed_cv_extensions:
     - .docx
     - .pdf
-  session_days: 14
+  session_days: 1
 
 scheduler:
   default_frequency_hours: 24
