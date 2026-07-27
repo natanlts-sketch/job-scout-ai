@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS user_preferences (
     email_notifications INTEGER DEFAULT 1,
     ai_consent INTEGER DEFAULT 0,
     search_frequency_hours INTEGER DEFAULT 24,
-    language TEXT DEFAULT 'en',
+    language TEXT DEFAULT 'he',
     updated_at TEXT NOT NULL
 );
 

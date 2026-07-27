@@ -10,21 +10,25 @@ if str(_ROOT) not in sys.path:
 
 import streamlit as st
 
-from src.auth import get_user_by_id
+from i18n import apply_direction, sync_lang_from_prefs, t
+from src.auth import get_preferences, get_user_by_id
 from src.core.db import initialize_database
 
 
 def require_user() -> dict:
     initialize_database()
     user_id = st.session_state.get("user_id")
+    if user_id:
+        sync_lang_from_prefs(get_preferences(user_id))
+    apply_direction()
     if not user_id:
-        st.warning("Please log in from the Home page.")
-        st.page_link("Home.py", label="Go to Home / Login")
+        st.warning(t("please_login"))
+        st.page_link("Home.py", label=t("go_home"))
         st.stop()
     user = get_user_by_id(user_id)
     if not user:
         st.session_state.clear()
-        st.warning("Session expired. Please log in again.")
-        st.page_link("Home.py", label="Go to Home / Login")
+        st.warning(t("session_expired"))
+        st.page_link("Home.py", label=t("go_home"))
         st.stop()
     return user

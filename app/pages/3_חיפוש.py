@@ -13,33 +13,35 @@ if str(_APP) not in sys.path:
 import streamlit as st
 
 from auth_gate import require_user
+from i18n import language_picker, t
 from src.core.config import load_config
 from src.search import last_successful_search, next_scheduled_search, run_search
 from src.sources import SOURCE_REGISTRY
 
 user = require_user()
-st.title("Search")
+language_picker("search_lang")
+st.title(t("search"))
 
 config = load_config()
 enabled = list(SOURCE_REGISTRY.keys())
 
 last = last_successful_search(user["id"])
-st.write(f"Last success: `{last['finished_at'] if last else 'never'}`")
-st.write(f"Next scheduled: `{next_scheduled_search(user['id']) or 'n/a'}`")
+st.write(f"{t('last_success_short')}: `{last['finished_at'] if last else t('never')}`")
+st.write(f"{t('next_scheduled_short')}: `{next_scheduled_search(user['id']) or t('not_scheduled')}`")
 
-sources = st.multiselect("Job sources", enabled, default=enabled)
-location_hint = st.text_input("Location focus (optional filter note)", "")
-role_hint = st.text_input("Role focus (optional)", "data analyst")
+sources = st.multiselect(t("job_sources"), enabled, default=enabled)
+location_hint = st.text_input(t("location_focus"), "")
+role_hint = st.text_input(t("role_focus"), "data analyst")
 min_score = st.number_input(
-    "Minimum relevance score",
+    t("min_score"),
     min_value=0,
     max_value=100,
     value=int(config["search"]["minimum_score"]),
 )
 
 progress = st.empty()
-if st.button("Search Now", type="primary"):
-    progress.info("Searching…")
+if st.button(t("search_now"), type="primary"):
+    progress.info(t("searching"))
     try:
         result = run_search(
             user_id=user["id"],
@@ -48,11 +50,15 @@ if st.button("Search Now", type="primary"):
             minimum_score=int(min_score),
         )
         progress.success(
-            f"Done. Fetched {result['fetched']}, matched {result['matched']}, "
-            f"new {result['new_count']}."
+            t(
+                "search_done",
+                fetched=result["fetched"],
+                matched=result["matched"],
+                new=result["new_count"],
+            )
         )
         if result["errors"]:
-            st.warning("Some sources failed:\n" + "\n".join(result["errors"]))
+            st.warning(t("sources_failed") + "\n" + "\n".join(result["errors"]))
         if result["new_jobs"]:
             st.dataframe(
                 [
@@ -70,6 +76,6 @@ if st.button("Search Now", type="primary"):
     except RuntimeError as exc:
         progress.error(str(exc))
     except Exception as exc:  # noqa: BLE001
-        progress.error(f"Search failed: {exc}")
+        progress.error(f"{t('search_failed')}: {exc}")
 
-st.caption(f"Hints recorded locally only — role={role_hint!r}, location={location_hint!r}")
+st.caption(f"role={role_hint!r}, location={location_hint!r}")

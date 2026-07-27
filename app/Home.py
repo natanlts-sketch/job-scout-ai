@@ -16,12 +16,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-from src.auth import authenticate, create_user, get_user_by_id
+from i18n import apply_direction, language_picker, set_lang, sync_lang_from_prefs, t
+from src.auth import authenticate, create_user, get_preferences, get_user_by_id
 from src.core.db import initialize_database
 from src.core.logging_setup import setup_logging
 
 setup_logging()
 initialize_database()
+
+if "ui_lang" not in st.session_state:
+    set_lang("he")
+
+apply_direction()
 
 st.markdown(
     """
@@ -40,36 +46,40 @@ def ensure_auth() -> dict | None:
     if "user_id" in st.session_state and st.session_state["user_id"]:
         user = get_user_by_id(st.session_state["user_id"])
         if user:
+            sync_lang_from_prefs(get_preferences(user["id"]))
             return user
     return None
 
 
 def login_page() -> None:
-    st.title("Job Scout AI")
-    st.caption("Local multi-user job matching · Hebrew & English · truthful CV tooling")
-    tab_login, tab_register = st.tabs(["Log in", "Register"])
+    language_picker("home_lang")
+    st.title(t("app_title"))
+    st.caption(t("app_caption"))
+    tab_login, tab_register = st.tabs([t("login"), t("register")])
 
     with tab_login:
-        email = st.text_input("Email", key="login_email")
-        password = st.text_input("Password", type="password", key="login_password")
-        if st.button("Log in", type="primary"):
+        email = st.text_input(t("email"), key="login_email")
+        password = st.text_input(t("password"), type="password", key="login_password")
+        if st.button(t("login"), type="primary"):
             user = authenticate(email, password)
             if user:
                 st.session_state["user_id"] = user["id"]
-                st.success("Welcome back.")
+                sync_lang_from_prefs(get_preferences(user["id"]))
+                st.success(t("welcome_back"))
                 st.rerun()
             else:
-                st.error("Invalid email or password.")
+                st.error(t("invalid_credentials"))
 
     with tab_register:
-        email = st.text_input("Email", key="reg_email")
-        name = st.text_input("Display name", key="reg_name")
-        password = st.text_input("Password (min 8 chars)", type="password", key="reg_password")
-        if st.button("Create account"):
+        email = st.text_input(t("email"), key="reg_email")
+        name = st.text_input(t("display_name"), key="reg_name")
+        password = st.text_input(t("password_min"), type="password", key="reg_password")
+        if st.button(t("create_account")):
             try:
                 user = create_user(email, password, name)
                 st.session_state["user_id"] = user["id"]
-                st.success("Account created.")
+                set_lang("he")
+                st.success(t("account_created"))
                 st.rerun()
             except ValueError as exc:
                 st.error(str(exc))
@@ -80,15 +90,14 @@ if not user:
     login_page()
     st.stop()
 
-st.sidebar.title("Job Scout AI")
-st.sidebar.write(f"Signed in as **{user.get('display_name') or user['email']}**")
-if st.sidebar.button("Log out"):
+language_picker("home_lang_authed")
+st.sidebar.title(t("app_title"))
+st.sidebar.write(f"{t('signed_in_as')} **{user.get('display_name') or user['email']}**")
+if st.sidebar.button(t("log_out")):
     st.session_state.clear()
+    set_lang("he")
     st.rerun()
 
-st.title(f"Hello, {user.get('display_name') or 'there'}")
-st.write(
-    "Use the left sidebar pages: **Dashboard**, **CV**, **Search**, **Jobs**, "
-    "**Applications**, **Settings**, and **Statistics**."
-)
-st.page_link("pages/1_Dashboard.py", label="Go to Dashboard", icon="📊")
+st.title(f"{t('hello')}, {user.get('display_name') or 'there'}")
+st.write(t("home_help"))
+st.page_link("pages/1_דשבורד.py", label=t("go_dashboard"), icon="📊")

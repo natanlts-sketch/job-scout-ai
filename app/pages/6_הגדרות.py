@@ -13,6 +13,7 @@ if str(_APP) not in sys.path:
 import streamlit as st
 
 from auth_gate import require_user
+from i18n import language_picker, set_lang, t
 from src.ai import ai_is_enabled
 from src.auth import delete_user_and_data, get_preferences, save_preferences
 from src.notify import send_test_email
@@ -20,90 +21,95 @@ from src.security import PRIVACY_NOTICE, backup_database
 from src.sources import SOURCE_REGISTRY
 
 user = require_user()
-st.title("Settings")
+language_picker("settings_lang")
+st.title(t("settings"))
 
 prefs = get_preferences(user["id"])
 
-st.subheader("Job preferences")
+st.subheader(t("job_prefs"))
 titles = st.text_area(
-    "Preferred titles (one per line)",
+    t("preferred_titles"),
     value="\n".join(prefs.get("preferred_titles") or []),
 )
 locations = st.text_area(
-    "Preferred locations (one per line)",
+    t("preferred_locations"),
     value="\n".join(prefs.get("preferred_locations") or []),
 )
 remote_preference = st.selectbox(
-    "Remote / hybrid / office",
+    t("remote_pref"),
     ["any", "remote", "hybrid", "office"],
     index=["any", "remote", "hybrid", "office"].index(prefs.get("remote_preference") or "any"),
 )
 min_ats = st.number_input(
-    "Minimum ATS score",
+    t("min_ats"),
     min_value=0.0,
     max_value=100.0,
     value=float(prefs.get("minimum_ats_score") or 0),
 )
 experience = st.selectbox(
-    "Experience level",
+    t("experience"),
     ["junior", "entry", "mid", "intern"],
     index=["junior", "entry", "mid", "intern"].index(prefs.get("experience_level") or "junior")
     if (prefs.get("experience_level") or "junior") in ["junior", "entry", "mid", "intern"]
     else 0,
 )
 languages = st.multiselect(
-    "Preferred languages",
+    t("preferred_langs"),
     ["en", "he"],
     default=prefs.get("preferred_languages") or ["en", "he"],
 )
 excluded_companies = st.text_area(
-    "Excluded companies",
+    t("excluded_companies"),
     value="\n".join(prefs.get("excluded_companies") or []),
 )
 excluded_keywords = st.text_area(
-    "Excluded keywords",
+    t("excluded_keywords"),
     value="\n".join(prefs.get("excluded_keywords") or []),
 )
 preferred_sources = st.multiselect(
-    "Preferred job sources",
+    t("preferred_sources"),
     list(SOURCE_REGISTRY.keys()),
     default=prefs.get("preferred_sources") or list(SOURCE_REGISTRY.keys()),
 )
 salary = st.text_input(
-    "Salary preference (optional, unused until salary data exists)",
+    t("salary_pref"),
     value=prefs.get("salary_preference") or "",
 )
 freq = st.number_input(
-    "Automatic search frequency (hours)",
+    t("search_freq"),
     min_value=1,
     max_value=168,
     value=int(prefs.get("search_frequency_hours") or 24),
 )
-language = st.selectbox("UI language", ["en", "he"], index=0 if prefs.get("language") != "he" else 1)
+language = st.selectbox(
+    t("ui_language"),
+    ["he", "en"],
+    index=0 if (prefs.get("language") or "he") != "en" else 1,
+)
 
-st.subheader("Notifications & AI")
+st.subheader(t("notifications_ai"))
 email_notifications = st.checkbox(
-    "Email notifications enabled",
+    t("email_notifications"),
     value=bool(prefs.get("email_notifications", True)),
 )
 ai_consent = st.checkbox(
-    "I consent to sending CV/job text to Anthropic when AI is enabled",
+    t("ai_consent"),
     value=bool(prefs.get("ai_consent", False)),
 )
-st.caption(f"AI runtime enabled: **{ai_is_enabled()}** (requires AI_ENABLED + ANTHROPIC_API_KEY)")
+st.caption(f"{t('ai_runtime')}: **{ai_is_enabled()}** (AI_ENABLED + ANTHROPIC_API_KEY)")
 
-if st.button("Save preferences", type="primary"):
+if st.button(t("save_prefs"), type="primary"):
     save_preferences(
         user["id"],
         {
-            "preferred_titles": [t.strip() for t in titles.splitlines() if t.strip()],
-            "preferred_locations": [t.strip() for t in locations.splitlines() if t.strip()],
+            "preferred_titles": [x.strip() for x in titles.splitlines() if x.strip()],
+            "preferred_locations": [x.strip() for x in locations.splitlines() if x.strip()],
             "remote_preference": remote_preference,
             "minimum_ats_score": min_ats,
             "experience_level": experience,
             "preferred_languages": languages,
-            "excluded_companies": [t.strip() for t in excluded_companies.splitlines() if t.strip()],
-            "excluded_keywords": [t.strip() for t in excluded_keywords.splitlines() if t.strip()],
+            "excluded_companies": [x.strip() for x in excluded_companies.splitlines() if x.strip()],
+            "excluded_keywords": [x.strip() for x in excluded_keywords.splitlines() if x.strip()],
             "preferred_sources": preferred_sources,
             "salary_preference": salary or None,
             "email_notifications": email_notifications,
@@ -112,27 +118,27 @@ if st.button("Save preferences", type="primary"):
             "language": language,
         },
     )
-    st.success("Saved")
+    set_lang(language)
+    st.success(t("saved"))
+    st.rerun()
 
-st.subheader("Email")
-if st.button("Send test email"):
+st.subheader(t("email"))
+if st.button(t("test_email")):
     try:
         st.info(send_test_email())
     except Exception as exc:  # noqa: BLE001
         st.error(str(exc))
 
-st.subheader("Privacy & data")
+st.subheader(t("privacy_data"))
 st.markdown(PRIVACY_NOTICE)
-if st.button("Backup database now"):
+if st.button(t("backup_now")):
     path = backup_database()
-    st.success(f"Backup written to {path}")
+    st.success(t("backup_written", path=path))
 
-st.danger_zone = st.container()
-with st.danger_zone:
-    st.subheader("Delete account")
-    confirm = st.text_input("Type DELETE to confirm account + data removal")
-    if st.button("Delete my account and data", type="primary") and confirm == "DELETE":
-        delete_user_and_data(user["id"])
-        st.session_state.clear()
-        st.success("Account deleted.")
-        st.page_link("Home.py", label="Back to Home")
+st.subheader(t("delete_account"))
+confirm = st.text_input(t("type_delete"))
+if st.button(t("delete_my_account"), type="primary") and confirm == "DELETE":
+    delete_user_and_data(user["id"])
+    st.session_state.clear()
+    st.success(t("account_deleted"))
+    st.page_link("Home.py", label=t("back_home"))
