@@ -10,7 +10,6 @@ from i18n import get_lang, t
 ASSETS = Path(__file__).resolve().parent / "assets"
 LOGO_PATH = ASSETS / "logo.png"
 
-# Logo palette
 GREEN = "#39B54A"
 GREEN_DARK = "#1B5E20"
 GREEN_BRIGHT = "#7CFF3A"
@@ -77,51 +76,53 @@ def apply_brand_theme() -> None:
         [data-testid="stSidebar"] a:hover {{
           color: {GREEN_BRIGHT} !important;
         }}
-        [data-testid="stSidebarUserContent"] {{
-          display: none !important;
-        }}
 
-        /* Top menu bar: logo + signed-in + logout */
-        .top-menu-bar {{
-          background: rgba(255,255,255,0.72);
+        /* Top bar row */
+        div[data-testid="stHorizontalBlock"]:has(.top-user-line) {{
+          background: rgba(255,255,255,0.82);
           border: 1px solid rgba(27,94,32,0.12);
           border-radius: 14px;
-          padding: 0.45rem 0.85rem;
+          padding: 0.55rem 0.75rem;
           margin-bottom: 0.85rem;
+          align-items: center;
         }}
-        .top-menu-bar [data-testid="stImage"],
-        .top-menu-bar [data-testid="stImage"] img {{
+        .top-user-line {{
+          margin: 0.35rem 0 !important;
+          font-size: 0.95rem;
+          color: {CHARCOAL} !important;
+          font-weight: 600;
+        }}
+
+        /* Transparent logo + thin 1px border */
+        [data-testid="stImage"],
+        [data-testid="stImage"] img {{
           background: transparent !important;
         }}
-        .top-menu-bar [data-testid="stImage"] img {{
+        div[data-testid="stHorizontalBlock"]:has(.top-user-line) [data-testid="stImage"] img,
+        .brand-hero [data-testid="stImage"] img {{
           border: 1px solid {GREEN} !important;
           border-radius: 2px;
           padding: 3px;
           box-sizing: content-box;
-        }}
-        .top-user-line {{
-          margin: 0;
-          font-size: 0.92rem;
-          color: {CHARCOAL};
-          font-weight: 600;
-        }}
-        .top-menu-bar .logout-wrap div.stButton > button {{
           background: transparent !important;
-          border: 1px solid rgba(26,26,26,0.18) !important;
+        }}
+
+        /* Logout in top bar */
+        div[data-testid="stHorizontalBlock"]:has(.top-user-line) div.stButton > button {{
+          background: transparent !important;
+          border: 1px solid rgba(26,26,26,0.2) !important;
           color: {CHARCOAL} !important;
           font-weight: 600 !important;
           border-radius: 999px !important;
-          padding: 0.4rem 0.95rem !important;
+          padding: 0.45rem 0.95rem !important;
           box-shadow: none !important;
-          width: 100%;
         }}
-        .top-menu-bar .logout-wrap div.stButton > button:hover {{
+        div[data-testid="stHorizontalBlock"]:has(.top-user-line) div.stButton > button:hover {{
           background: rgba(239, 68, 68, 0.10) !important;
           border-color: rgba(220, 38, 38, 0.45) !important;
           color: #B91C1C !important;
         }}
 
-        /* Main primary buttons */
         div.stButton > button[kind="primary"],
         div.stButton > button[data-testid="baseButton-primary"] {{
           background: {GREEN};
@@ -146,23 +147,12 @@ def apply_brand_theme() -> None:
           border: 1px solid rgba(27,94,32,0.12);
           border-radius: 14px;
           padding: 0.75rem 1rem;
-          box-shadow: none;
         }}
-        [data-testid="stMetricLabel"] {{
-          color: {MUTED} !important;
-        }}
-        [data-testid="stMetricValue"] {{
-          color: {CHARCOAL} !important;
-        }}
+        [data-testid="stMetricLabel"] {{ color: {MUTED} !important; }}
+        [data-testid="stMetricValue"] {{ color: {CHARCOAL} !important; }}
 
-        div[data-baseweb="tab-list"] {{
-          gap: 0.35rem;
-          background: transparent;
-        }}
-        button[data-baseweb="tab"] {{
-          border-radius: 999px !important;
-          font-weight: 700;
-        }}
+        div[data-baseweb="tab-list"] {{ gap: 0.35rem; background: transparent; }}
+        button[data-baseweb="tab"] {{ border-radius: 999px !important; font-weight: 700; }}
         button[data-baseweb="tab"][aria-selected="true"] {{
           background: rgba(57,181,74,0.15) !important;
           color: {GREEN_DARK} !important;
@@ -176,16 +166,6 @@ def apply_brand_theme() -> None:
           margin-bottom: 1.25rem;
           direction: {direction};
           text-align: {text_align};
-        }}
-        .brand-hero [data-testid="stImage"],
-        .brand-hero [data-testid="stImage"] img {{
-          background: transparent !important;
-        }}
-        .brand-hero [data-testid="stImage"] img {{
-          border: 1px solid {GREEN} !important;
-          border-radius: 2px;
-          padding: 3px;
-          box-sizing: content-box;
         }}
         .brand-tagline {{
           margin: 0;
@@ -208,14 +188,7 @@ def apply_brand_theme() -> None:
           margin: 0.55rem 0 0.9rem 0;
         }}
 
-        [data-testid="InputInstructions"] {{
-          display: none !important;
-        }}
-
-        [data-testid="stImage"] img,
-        [data-testid="stImage"] {{
-          background: transparent !important;
-        }}
+        [data-testid="InputInstructions"] {{ display: none !important; }}
 
         .block-container, [data-testid="stMarkdownContainer"], label, p, h1, h2, h3 {{
           direction: {direction};
@@ -230,10 +203,11 @@ def apply_brand_theme() -> None:
 def render_logo(width: int = 320) -> None:
     if LOGO_PATH.exists():
         st.image(str(LOGO_PATH), width=width)
+    else:
+        st.markdown(f"**{t('app_title')}**")
 
 
 def render_brand_header(*, show_caption: bool = True, width: int = 340) -> None:
-    """Login-page brand block only (not the app top bar)."""
     apply_brand_theme()
     st.markdown('<div class="brand-hero">', unsafe_allow_html=True)
     render_logo(width=width)
@@ -250,23 +224,16 @@ def render_brand_header(*, show_caption: bool = True, width: int = 340) -> None:
 
 
 def render_top_bar(*, user_label: str, logout_key: str = "top_logout") -> bool:
-    """Top menu bar: transparent logo + signed-in label + logout."""
+    """Top menu: logo + signed-in + logout (no HTML wrappers around widgets)."""
     apply_brand_theme()
-    st.markdown('<div class="top-menu-bar">', unsafe_allow_html=True)
-    left, mid, right = st.columns([2.0, 4.2, 1.5], vertical_alignment="center")
+    left, mid, right = st.columns([2.2, 4.0, 1.6])
     with left:
-        if LOGO_PATH.exists():
-            st.image(str(LOGO_PATH), width=168)
-        else:
-            st.markdown(f"**{t('app_title')}**")
+        render_logo(width=170)
     with mid:
         st.markdown(
             f'<p class="top-user-line">{t("signed_in_as")} <strong>{user_label}</strong></p>',
             unsafe_allow_html=True,
         )
     with right:
-        st.markdown('<div class="logout-wrap">', unsafe_allow_html=True)
-        clicked = st.button(t("log_out"), key=logout_key, use_container_width=True)
-        st.markdown("</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-    return clicked
+        return st.button(t("log_out"), key=logout_key, use_container_width=True)
+    return False
