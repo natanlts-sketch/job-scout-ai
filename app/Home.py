@@ -16,7 +16,12 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-from brand import apply_brand_theme, render_brand_header, render_sidebar_brand
+from brand import (
+    apply_brand_theme,
+    render_brand_header,
+    render_sidebar_brand,
+    render_sidebar_logout,
+)
 from i18n import language_picker, set_lang, sync_lang_from_prefs, t
 from session_cookie import clear_session_token, read_session_token, write_session_token
 from src.auth import (
@@ -116,10 +121,9 @@ if not user:
     login_page()
     st.stop()
 
-render_sidebar_brand()
+render_sidebar_brand(user_label=user.get("display_name") or user["email"])
 language_picker("home_lang_authed")
-st.sidebar.write(f"{t('signed_in_as')} **{user.get('display_name') or user['email']}**")
-if st.sidebar.button(t("log_out")):
+if render_sidebar_logout(key="home_logout"):
     end_persistent_session()
     st.rerun()
 

@@ -9,7 +9,7 @@ if str(_ROOT) not in sys.path:
 
 import streamlit as st
 
-from brand import apply_brand_theme, render_sidebar_brand
+from brand import apply_brand_theme, render_sidebar_brand, render_sidebar_logout
 from i18n import sync_lang_from_prefs, t
 from session_cookie import clear_session_token, read_session_token, write_session_token
 from src.auth import get_preferences, get_user_by_id, get_user_by_session_token, revoke_session_token
@@ -19,7 +19,6 @@ from src.core.db import initialize_database
 def require_user() -> dict:
     initialize_database()
     apply_brand_theme()
-    render_sidebar_brand()
 
     user_id = st.session_state.get("user_id")
     user = get_user_by_id(user_id) if user_id else None
@@ -33,13 +32,15 @@ def require_user() -> dict:
             sync_lang_from_prefs(get_preferences(user["id"]))
 
     if not user:
+        render_sidebar_brand()
         st.warning(t("please_login"))
         st.page_link("Home.py", label=t("go_home"))
         st.stop()
 
     sync_lang_from_prefs(get_preferences(user["id"]))
-    st.sidebar.write(f"{t('signed_in_as')} **{user.get('display_name') or user['email']}**")
-    if st.sidebar.button(t("log_out"), key="sidebar_logout"):
+    label = user.get("display_name") or user["email"]
+    render_sidebar_brand(user_label=label)
+    if render_sidebar_logout(key="sidebar_logout"):
         token = read_session_token()
         revoke_session_token(token)
         clear_session_token()
