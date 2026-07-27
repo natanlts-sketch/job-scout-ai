@@ -7,16 +7,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
-"""Job Scout AI — Streamlit multipage entrypoint."""
-
 import streamlit as st
-
-from src.auth import authenticate, create_user, get_user_by_id
-from src.core.db import initialize_database
-from src.core.logging_setup import setup_logging
-
-setup_logging()
-initialize_database()
 
 st.set_page_config(
     page_title="Job Scout AI",
@@ -24,6 +15,13 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+from src.auth import authenticate, create_user, get_user_by_id
+from src.core.db import initialize_database
+from src.core.logging_setup import setup_logging
+
+setup_logging()
+initialize_database()
 
 st.markdown(
     """

@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+import hashlib
+import hmac
 import json
 import secrets
 from datetime import datetime, timezone
 from typing import Any
-
-import bcrypt
 
 from src.core.db import initialize_database
 from src.core.logging_setup import get_logger
@@ -18,13 +18,34 @@ def utc_now() -> str:
 
 
 def hash_password(password: str) -> str:
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+    """PBKDF2-SHA256 password hash (stdlib — Streamlit Cloud friendly)."""
+    salt = secrets.token_hex(16)
+    digest = hashlib.pbkdf2_hmac(
+        "sha256",
+        password.encode("utf-8"),
+        salt.encode("utf-8"),
+        200_000,
+    ).hex()
+    return f"pbkdf2${salt}${digest}"
 
 
 def verify_password(password: str, password_hash: str) -> bool:
     try:
+        if password_hash.startswith("pbkdf2$"):
+            _, salt, digest = password_hash.split("$", 2)
+            check = hashlib.pbkdf2_hmac(
+                "sha256",
+                password.encode("utf-8"),
+                salt.encode("utf-8"),
+                200_000,
+            ).hex()
+            return hmac.compare_digest(check, digest)
+
+        # Legacy bcrypt hashes (local installs that still have bcrypt)
+        import bcrypt  # type: ignore
+
         return bcrypt.checkpw(password.encode("utf-8"), password_hash.encode("utf-8"))
-    except ValueError:
+    except Exception:
         return False
 
 

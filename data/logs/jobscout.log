@@ -1,0 +1,181 @@
+2026-07-27 14:31:32 | ERROR    | jobscout.sources | Source unavailable — remotive: source down
+2026-07-27 14:31:32 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:32 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:33 | INFO     | jobscout.auth | Created user a@example.com
+2026-07-27 14:31:33 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:33 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:33 | INFO     | jobscout.auth | Created user b@example.com
+2026-07-27 14:31:33 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:33 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:33 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:33 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:33 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:33 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:33 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_user_separation0/test.db
+2026-07-27 14:31:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:34 | INFO     | jobscout.auth | Created user prefs@example.com
+2026-07-27 14:31:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_duplicate_job_detection0/test.db
+2026-07-27 14:31:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_duplicate_job_detection0/test.db
+2026-07-27 14:31:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_cv_upload_docx0/test.db
+2026-07-27 14:31:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_cv_upload_docx0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.auth | Created user cv@example.com
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_cv_upload_docx0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_cv_upload_docx0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_application_package0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_application_package0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.auth | Created user pack@example.com
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_application_package0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_application_package0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_application_package0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.applications | Created application package at /tmp/pytest-of-natan/pytest-0/test_application_package0/applications/1/Acme_Junior_Data_Analyst_2026-07-27
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_application_package0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_delete_account0/test.db
+2026-07-27 14:31:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_delete_account0/test.db
+2026-07-27 14:31:36 | INFO     | jobscout.auth | Created user del@example.com
+2026-07-27 14:31:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_delete_account0/test.db
+2026-07-27 14:31:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_delete_account0/test.db
+2026-07-27 14:31:36 | INFO     | jobscout.auth | Deleted user 1 and cascaded data
+2026-07-27 14:31:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-0/test_delete_account0/test.db
+2026-07-27 14:31:51 | ERROR    | jobscout.sources | Source unavailable — remotive: source down
+2026-07-27 14:31:51 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:51 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:51 | INFO     | jobscout.auth | Created user a@example.com
+2026-07-27 14:31:51 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:51 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:52 | INFO     | jobscout.auth | Created user b@example.com
+2026-07-27 14:31:52 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:52 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:52 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:52 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:52 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:52 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:52 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_user_separation0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.auth | Created user prefs@example.com
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_preferences_roundtrip0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_duplicate_job_detection0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_duplicate_job_detection0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_cv_upload_docx0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_cv_upload_docx0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.auth | Created user cv@example.com
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_cv_upload_docx0/test.db
+2026-07-27 14:31:53 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_cv_upload_docx0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_application_package0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_application_package0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.auth | Created user pack@example.com
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_application_package0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_application_package0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_application_package0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_application_package0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.applications | Created application package at /tmp/pytest-of-natan/pytest-1/test_application_package0/applications/1/Acme_Junior_Data_Analyst_2026-07-27
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_application_package0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_delete_account0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_delete_account0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.auth | Created user del@example.com
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_delete_account0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_delete_account0/test.db
+2026-07-27 14:31:54 | INFO     | jobscout.auth | Deleted user 1 and cascaded data
+2026-07-27 14:31:54 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-1/test_delete_account0/test.db
+2026-07-27 14:32:15 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 14:35:34 | ERROR    | jobscout.sources | Source unavailable — remotive: source down
+2026-07-27 14:35:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:34 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:35 | INFO     | jobscout.auth | Created user a@example.com
+2026-07-27 14:35:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:35 | INFO     | jobscout.auth | Created user b@example.com
+2026-07-27 14:35:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:35 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_user_separation0/test.db
+2026-07-27 14:35:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_preferences_roundtrip0/test.db
+2026-07-27 14:35:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_preferences_roundtrip0/test.db
+2026-07-27 14:35:36 | INFO     | jobscout.auth | Created user prefs@example.com
+2026-07-27 14:35:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_preferences_roundtrip0/test.db
+2026-07-27 14:35:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_preferences_roundtrip0/test.db
+2026-07-27 14:35:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_preferences_roundtrip0/test.db
+2026-07-27 14:35:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_duplicate_job_detection0/test.db
+2026-07-27 14:35:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_duplicate_job_detection0/test.db
+2026-07-27 14:35:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_cv_upload_docx0/test.db
+2026-07-27 14:35:36 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_cv_upload_docx0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.auth | Created user cv@example.com
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_cv_upload_docx0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_cv_upload_docx0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_application_package0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_application_package0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.auth | Created user pack@example.com
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_application_package0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_application_package0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_application_package0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_application_package0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.applications | Created application package at /tmp/pytest-of-natan/pytest-2/test_application_package0/applications/1/Acme_Junior_Data_Analyst_2026-07-27
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_application_package0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_delete_account0/test.db
+2026-07-27 14:35:37 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_delete_account0/test.db
+2026-07-27 14:35:38 | INFO     | jobscout.auth | Created user del@example.com
+2026-07-27 14:35:38 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_delete_account0/test.db
+2026-07-27 14:35:38 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_delete_account0/test.db
+2026-07-27 14:35:38 | INFO     | jobscout.auth | Deleted user 1 and cascaded data
+2026-07-27 14:35:38 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-2/test_delete_account0/test.db
+2026-07-27 14:41:18 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 14:41:33 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 14:42:06 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 14:42:08 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 14:42:09 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 14:42:10 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 14:42:10 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 14:42:11 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 14:51:50 | INFO     | jobscout.db | Database initialized at /home/natan/Desktop/junior-data-job-scout/data/jobs.db
+2026-07-27 15:50:48 | ERROR    | jobscout.sources | Source unavailable — remotive: source down
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.auth | Created user a@example.com
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.auth | Created user b@example.com
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_user_separation0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_preferences_roundtrip0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_preferences_roundtrip0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.auth | Created user prefs@example.com
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_preferences_roundtrip0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_preferences_roundtrip0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_preferences_roundtrip0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_duplicate_job_detection0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_duplicate_job_detection0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_cv_upload_docx0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_cv_upload_docx0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.auth | Created user cv@example.com
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_cv_upload_docx0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_cv_upload_docx0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_application_package0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_application_package0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.auth | Created user pack@example.com
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_application_package0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_application_package0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_application_package0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_application_package0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.applications | Created application package at /tmp/pytest-of-natan/pytest-3/test_application_package0/applications/1/Acme_Junior_Data_Analyst_2026-07-27
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_application_package0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_delete_account0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_delete_account0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.auth | Created user del@example.com
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_delete_account0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_delete_account0/test.db
+2026-07-27 15:50:48 | INFO     | jobscout.auth | Deleted user 1 and cascaded data
+2026-07-27 15:50:48 | INFO     | jobscout.db | Database initialized at /tmp/pytest-of-natan/pytest-3/test_delete_account0/test.db
